@@ -1,7 +1,7 @@
 import {expect, test} from '@playwright/test'
 
 test.describe('Sign up and Login Tests', () =>{
-    test('Signup test', async ({page}) => {
+    test('Automate the sign-up process', async ({page}) => {
 
       await page.goto('https://www.demoblaze.com/');
       await page.getByRole('link', { name: 'Sign up' }).click();
@@ -14,7 +14,7 @@ test.describe('Sign up and Login Tests', () =>{
       await expect(modal).toBeHidden();
     });
 
-    test('Login', async({page}) => {
+    test('Automate the login process', async({page}) => {
       await page.goto('https://www.demoblaze.com/'); 
       await page.getByRole('link', { name: 'Log in' }).click();
       await page.locator('#loginusername').click();
