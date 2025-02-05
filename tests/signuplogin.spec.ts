@@ -1,29 +1,25 @@
-import {expect, test} from '@playwright/test'
-
-test.describe('Sign up and Login Tests', () =>{
-    test('Automate the sign-up process', async ({page}) => {
-
-      await page.goto('https://www.demoblaze.com/');
-      await page.getByRole('link', { name: 'Sign up' }).click();
-      await page.getByRole('textbox', { name: 'Username:' }).click();
-      await page.getByRole('textbox', { name: 'Username:' }).fill('aasdfUsuarioDePrueba1239691');
-      await page.getByRole('textbox', { name: 'Password:' }).click();
-      await page.getByRole('textbox', { name: 'Password:' }).fill('Contrase1012');
-      await page.getByRole('button', { name: 'Sign up' }).click();
-      const modal = page.locator('h5[id="signInModalLabel"]');
-      await expect(modal).toBeHidden();
-    });
-
-    test('Automate the login process', async({page}) => {
-      await page.goto('https://www.demoblaze.com/'); 
-      await page.getByRole('link', { name: 'Log in' }).click();
-      await page.locator('#loginusername').click();
-      await page.locator('#loginusername').fill('asdfUsuarioDePrueba1239691');
-      await page.locator('#loginpassword').click();
-      await page.locator('#loginpassword').fill('Contrase1012');
-      await page.getByRole('button', { name: 'Log in' }).click();
-      await expect(page.getByRole('link', { name: 'Log out' })).toBeVisible();
-
-    });
-    
+import { test } from '@playwright/test';
+import { SignUpPage } from '../pages/SignUpPage';
+import { LoginPage } from '../pages/LoginPage';
+ 
+test.describe('Sign up and Login Tests', () => {
+  test('Automate the sign-up process', async ({ page }) => {
+    const signUpPage = new SignUpPage(page);
+ 
+    await signUpPage.navigate();
+    await signUpPage.openSignUpModal();
+    await signUpPage.fillSignUpForm('aasdfUsuarioDePrueba1239691', 'Contrase1012');
+    await signUpPage.submitSignUp();
+    await signUpPage.verifySignUpModalHidden();
+  });
+ 
+  test('Automate the login process', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+ 
+    await loginPage.navigate();
+    await loginPage.openLoginModal();
+    await loginPage.fillLoginForm('aasdfUsuarioDePrueba1239691', 'Contrase1012');
+    await loginPage.submitLogin();
+    await loginPage.verifyUserLoggedIn();
+  });
 });
